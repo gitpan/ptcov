@@ -1,0 +1,110 @@
+#! /usr/local/bin/perl 
+
+# This tool is copyright (c) 1997-98 by Baskar S (baskar@india.ti.com) and
+# may be distributed under  terms of the  Artistic License used to cover
+# Perl itself.   See the file  Artistic in the  distribution of Perl 5.x
+# for details of copy and distribution terms. All rights reserved
+
+
+
+######################## PERL TESTCOVERAGE TOOL #######################################
+##
+##   Usage : ptcov ( -covfile  <coveragefilename> <commandline> ) | -view <coveragefilename>  
+##
+##   Revisions 
+##   
+##   Rev.No.  Author    Date       Remarks 
+## 
+##   0.5.0    Baskar S 27Oct'97    Initial Version , Beta Release to ASIC,TII 
+##   1.0.0    Baskar S 01Dec'97    Disabled text widget, and handled total count 
+##                                 initializations.                          
+## 
+###########################################################################################
+
+
+
+require("pwd.pl") ; 
+
+$Version = "0.5.0"  ; 
+
+# check if the testcov env is set 
+if( !( defined($ENV{PTCOV_PATH})) || !( -d $ENV{PTCOV_PATH}) )  
+{ 
+  print "ERROR >> PTCOV_PATH , environment variable needs to be set to the \n" ; 
+  print "         Perl TestCoverage Tool's pathname \n" ; 
+  exit 1 ; 
+} 
+  
+print "
+                  PTCOV Ver $Version
+               The Perl TestCoverage Tool
+
+This tool is copyright (c) 1997-98 by Baskar S (baskar\@india.ti.com) and
+may be distributed under  terms of the  Artistic License used to cover
+Perl itself.   See the file  Artistic in the  distribution of Perl 5.x
+for details of copy and distribution terms. All rights reserved
+
+"; 
+
+
+# include the PTCOV PATH 
+push(@INC,"$ENV{PTCOV_PATH}/scripts/") ; 
+
+# initialize the pwd 
+    initpwd() ; 
+
+
+# get the command line 
+
+# check the first parameter 
+if( $ARGV[0] eq "-covfile" ) 
+{ 
+
+    require("CollectCov.pl") ; 
+   # get the coverage filename 
+    my $CoverageFileName = $ARGV[1] ;
+
+    # check if the coverage file already exists 
+    if( ( -f $CoverageFileName ) )
+    {
+	print "WARNING >> $CoverageFileName already exists.\n" ;
+        print "WARNING >> Updating the coverage metrics for this run onto $CoverageFileName \n" ; 
+     }
+
+    shift(@ARGV) ;     
+    shift(@ARGV) ;  
+    # call set for collecting coverage 
+    CollectCoverage($CoverageFileName,@ARGV) ; 
+} elsif( $ARGV[0] eq "-view" ) 
+  { 
+      if( $#ARGV != 1 ) 
+      { 
+         print "Usage : $0 ( -covfile  <coveragefilename> <commandline> ) | -view <coveragefilename>  \n" ;
+         exit(1) ;  
+      }
+      require("TestCov.pl") ; 
+       $StoredCoverageFileName = $ARGV[1] ;
+
+      if( !( -r $StoredCoverageFileName) ) 
+      { 
+	  print "ERROR >> $StoredCoverageFileName not in read mode \n" ; 
+          exit(1) ; 
+      }
+          
+    # call the view section 
+    ViewCoverage() ;
+   } else 
+{ 
+
+     print "Usage : $0 ( -covfile  <coveragefilename> <commandline> ) | -view <coveragefilename>  \n" ; 
+     exit 1 ; 
+}
+
+ 
+ 
+
+ 
+  
+
+
+

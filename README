@@ -1,0 +1,45 @@
+PTCOV Version 0.5.0 - THE PERL TESTCOVERAGE TOOL 
+-------------------------------------------------
+
+PTCOV, is  a testcoverage tool for Perl  5.x .  This tool now supports
+line coverage  analysis.It  provides  capabilities for   capturing the
+lines covered,  and for  visually analyzing  the uncovered  lines.  It
+provides a consolidated  coverage  report, for  mailing or taking  the
+hard copy of the same.It also allows for a postscript hard copy of the
+file, with the uncovered lines shaded.
+
+Set the DISPLAY environment variable, to your display .
+ 
+Set the environment variable PTCOV_PATH to the PTCOV release directory
+path.
+
+Usage : ptcov ( -covfile  <coveragefilename> <commandline> ) 
+              | -view <coveragefilename> 
+
+
+Platform : 
+----------
+
+Needs Perl 5.x ( tested on  Perl 5.004 ) . Supported  on both SUN5 and
+HPUX platforms.
+
+Support : 
+---------
+
+Please  contact  Baskar   S   (baskar@india.ti.com)   ,  for  queries,
+bug-reports, enhancement requests or  if interested in the future work
+of this tool.
+
+Documentation : 
+---------------
+
+Please  read the ptcov.ps  , under the  documentation directory, for a
+comprehensive explanation of the working of the tool.
+
+License : 
+---------
+
+This tool is copyright (c) 1997  by Baskar S (baskar@india.ti.com) and
+may be distributed under terms  of the Artistic  License used to cover
+Perl itself.   See the file Artistic in  the distribution of  Perl 5.x
+for details of copy and distribution terms. All rights reserved
